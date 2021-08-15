@@ -12,7 +12,7 @@ services:
     frontend:
         build:
             context: ./frontend
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.dev
         command: yarn start
         volumes:
             - ./frontend:/usr/src/app

@@ -2,13 +2,13 @@
 ## preparation
 ```
 $ git clone --recursive https://github.com/izuna385/arxiv-checker
-$ cd frontend
-$ yarn install
-$ cd ..
 ```
 
 ### development
 ```
+$ cd frontend
+$ yarn install
+$ cd ..
 $ docker-compose up --build
 # (When you finish coding)
 $ docker-compose down

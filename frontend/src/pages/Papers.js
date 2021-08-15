@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 // apis
 import Paper from '../components/Paper';
@@ -6,16 +6,21 @@ import { fetchPapers } from '../apis/fetchPapers';
 
 export const Papers = () => {
 
+    const[allPapersData, setAllPapersData] = useState([]);
+
     useEffect(() => {
         fetchPapers()
-        .then((data) =>
-        console.log(data)
-        )
+        .then(data => setAllPapersData(data.papers))
     }, [])
 
     return (
         <Fragment>
-            Paper一覧
+            {console.log(allPapersData)}
+            <ul>
+                {allPapersData.map((data) => (
+                    <Paper paperData={data}/>
+                ))}
+            </ul>
         </Fragment>
     )
 }

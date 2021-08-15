@@ -1,11 +1,20 @@
-version: '3.7'
 services:
-  server:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    volumes:
-      - ./backend/:/backend/
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --log-level trace
-    ports:
-      - 8000:8000
+    backend:
+        tty: true
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        volumes:
+            - ./backend/:/backend/
+        command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --log-level trace
+        ports:
+            - 8000:8000
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        command: yarn start
+        volumes:
+            - ./frontend:/usr/src/app
+        ports:
+            - "3000:3000"

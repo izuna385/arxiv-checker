@@ -1,5 +1,12 @@
 # arxiv-checker
-## build
+## preparation
+```
+$ git clone --recursive https://github.com/izuna385/arxiv-checker
+$ cd frontend
+$ yarn install
+$ cd ..
+```
+
 ### development
 ```
 $ docker-compose up --build

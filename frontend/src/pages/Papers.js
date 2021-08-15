@@ -1,12 +1,23 @@
-import Paper from "../components/Paper"
+import React, { Fragment, useEffect } from 'react';
 
-const Papers = () => {
+// apis
+import Paper from '../components/Paper';
+import { fetchPapers } from '../apis/fetchPapers';
+
+export const Papers = () => {
+
+    useEffect(() => {
+        fetchPapers()
+        .then((data) =>
+        console.log(data)
+        )
+    }, [])
+
     return (
-    <div>
-        <Paper />
-        <Paper />
-    </div>
- )
+        <Fragment>
+            Paper一覧
+        </Fragment>
+    )
 }
 
-export default Papers
+export default Papers;

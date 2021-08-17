@@ -1,4 +1,9 @@
 # arxiv-checker
+SPA using Nginx, React, FastAPI(Python).
+This app can be built using docker-compose.
+
+We use docker-compose.yml for local development and docker-compose.prod.yml for commercial deployment.
+
 ## preparation
 ```
 $ git clone --recursive https://github.com/izuna385/arxiv-checker

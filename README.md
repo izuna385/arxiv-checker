@@ -1,4 +1,6 @@
 # arxiv-checker
+![demo](./img/demo.png)
+
 SPA using Nginx, React, FastAPI(Python).
 This app can be built using docker-compose.
 

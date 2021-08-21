@@ -1,4 +1,5 @@
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button'
 import './Paper.css';
 
 const Paper = ({ paperData }) => {
@@ -22,7 +23,7 @@ const Paper = ({ paperData }) => {
                     <small className="text-muted">Task: {paperData.task}</small>
                 </Card.Text>
                 <Card.Text>
-                    <small className="text-muted">Unique NE: {paperData.ne}</small>
+                    <small className="text-muted">Unique NE: {paperData.ne.map((data) => <Button variant="outline-primary">{data}</Button>)}</small>
                 </Card.Text>
                 </Card.Body>
             </Card>

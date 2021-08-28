@@ -6,5 +6,5 @@ export const fetchPapers =() => {
     .then(res => {
       return res.data
     })
-    .catch((e) => console.error(e))
+    .catch((e) => console.log(e))
   }

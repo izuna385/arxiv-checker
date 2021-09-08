@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -46,20 +46,83 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const classes = useStyles();
+  useEffect(() => {
+    if (localStorage.getItem('token') !== null) {
+      window.location.replace('http://localhost:3000/dashboard');
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  const onSubmit = e => {
+    e.preventDefault();
+
+    const user = {
+      email: email,
+      password: password
+    };
+
+    fetch('http://127.0.0.1:8000/api/v1/users/auth/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.key) {
+          localStorage.clear();
+          localStorage.setItem('token', data.key);
+          window.location.replace('http://localhost:3000/dashboard');
+        } else {
+          setEmail('');
+          setPassword('');
+          localStorage.clear();
+          setErrors(true);
+        }
+      });
+  };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+      {loading === false && <h1>Login</h1>}
+      {errors === true && <h2>Cannot log in with provided credentials</h2>}
+      {loading === false && (
+        <form onSubmit={onSubmit} className={classes.form} noValidate>
+          <label htmlFor='email'>Email address:</label> <br />
+          {/*<input*/}
+          {/*  name='email'*/}
+          {/*  type='email'*/}
+          {/*  value={email}*/}
+          {/*  required*/}
+          {/*  onChange={e => setEmail(e.target.value)}*/}
+          {/*/>{' '}*/}
+          {/*<br />*/}
+          {/*<label htmlFor='password'>Password:</label> <br />*/}
+          {/*<input*/}
+          {/*  name='password'*/}
+          {/*  type='password'*/}
+          {/*  value={password}*/}
+          {/*  required*/}
+          {/*  onChange={e => setPassword(e.target.value)}*/}
+          {/*/>{' '}*/}
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -68,17 +131,22 @@ export default function SignIn() {
             id="email"
             label="Email Address"
             name="email"
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             autoComplete="email"
             autoFocus
           />
           <TextField
             variant="outlined"
             margin="normal"
-            required
+
             fullWidth
-            name="password"
-            label="Password"
-            type="password"
+            name='password'
+            type='password'
+            value={password}
+            required
+            onChange={e => setPassword(e.target.value)}
             id="password"
             autoComplete="current-password"
           />
@@ -86,12 +154,17 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
+
+
+          <br />
+          {/*<input type='submit' value='Login' />*/}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            value='Login'
           >
             Sign In
           </Button>
@@ -108,10 +181,13 @@ export default function SignIn() {
             </Grid>
           </Grid>
         </form>
+      )}
       </div>
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
   );
-}
+};
+
+export default Login;

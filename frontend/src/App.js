@@ -9,6 +9,7 @@ const App = () => {
     <div className='App'>
       <Router>
         <Switch>
+        <Route path='/' component={Papers} exact />
           <Route path='/login' component={Login} exact />
           <Route path='/signup' component={Signup} exact />
         </Switch>
